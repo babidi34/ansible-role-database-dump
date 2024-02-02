@@ -18,10 +18,10 @@ The role uses the following variables which you can also override:
 - `db_type`: The type of the database, `mysql` or `mariadb`.
 - `mysql_package_name`: The package name for MySQL client utilities.
 - `mariadb_package_name`: The package name for MariaDB client utilities.
-- `mysql_backup_path`: The path where backups should be stored on the target machine.
-- `mysql_user`: The user for connecting to the database.
-- `mysql_group`: The group for file permissions in the backup directory.
-- `mysql_database`: The name of the database to backup.
+- `backup_path`: The path where backups should be stored on the target machine.
+- `database_user`: The user for connecting to the database.
+- `database_group`: The group for file permissions in the backup directory.
+- `database_name`: The name of the database to backup.
 - `cron_minute`: The minute when the cron job should run.
 - `cron_hour`: The hour when the cron job should run.
 - `dump_execute_now`: Whether to execute a database dump immediately.
@@ -47,9 +47,9 @@ Example Playbook
     dump_execute_now: true
     cron_minute: '0'
     cron_hour: '2'
-    mysql_user: zabbix
-    mysql_database: "zabbix-server"
-    mysql_password: "{{ zabbix_server_dbpassword }}"
+    database_user: zabbix
+    database_name: "zabbix-server"
+    database_password: "{{ zabbix_server_dbpassword }}"
 
   roles:
     - mysql-dump

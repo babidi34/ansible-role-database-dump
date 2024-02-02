@@ -1,8 +1,15 @@
 #!/bin/bash
 
-mysql_user="{{ mysql_user }}"
-mysql_password="{{ mysql_password }}"
-mysql_database="{{ mysql_database }}"
-mysql_backup_path="{{ mysql_backup_path }}"
+db_type="{{ db_type }}"
+database_user="{{ database_user }}"
+database_password="{{ database_password }}"
+database_name="{{ database_name }}"
+backup_path="{{ backup_path }}"
+database_host="{{ database_host }}"
+database_port="{{ database_port }}"
 
-mysqldump -u $mysql_user -p"$mysql_password" $mysql_database | gzip -8 > "$mysql_backup_path/$mysql_database−$(date +'%Y-%m-%dT%H:%M:%SZ').sql.gz"
+{% if db_type == 'mysql' or db_type == 'mariadb' %}
+mysqldump -h $database_host -P $database_port -u $database_user -p"$database_password" $database_name | gzip -8 > "$backup_path/$database_name-$(date +'%Y-%m-%dT%H:%M:%SZ').sql.gz"
+{% elif db_type == 'postgresql' %}
+PGPASSWORD="$database_password" pg_dump -h $database_host -p $database_port -U $database_user $database_name | gzip -8 > "$backup_path/$database_name-$(date +'%Y-%m-%dT%H:%M:%SZ').sql.gz"
+{% endif %}

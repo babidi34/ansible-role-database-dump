@@ -1,9 +1,5 @@
 #!/bin/bash
 
-mysql_backup_path="{{ mysql_backup_path }}"
+backup_path="{{ backup_path }}"
 
-for file in "$mysql_backup_path"/*.gz; do
-    if [[ $(stat -c %Y "$file") -lt $(date -d '-7 days' +%s) ]]; then
-        rm "$file"
-    fi
-done
+find "$backup_path" -name '*.gz' -type f -mtime +7 -delete

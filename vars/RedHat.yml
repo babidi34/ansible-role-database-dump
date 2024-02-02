@@ -2,3 +2,4 @@
 
 mariadb_package_name: mariadb
 mysql_package_name: mysql
+postgresql_package_name: postgresql
